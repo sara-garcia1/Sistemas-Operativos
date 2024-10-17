@@ -1,11 +1,13 @@
 /********************************************************************
-Autor: Sara Valentina GarcÃ­a
+Autor: Sara Valentina Garcí­a
 Materia: Sistemas Operativos
 Fecha: 17/10/24
-Tema: Pipe Named o FIFO o TuberÃ­a
-TÃ³pico: ComunicaciÃ³n Bidireccional 
+Tema: Pipe Named o FIFO o Tubería
+Tópico: Comunicación Bidireccional 
 
 *********************************SERVIDOR****************************
+El servidor recibe el mensaje del cliente con ayuda de la tubería bidireccional,
+le cambia el orden y se lo reenvia a la tubería para que llegue finalmente al cliente.
 
 *********************************************************************/
 #include <stdio.h>
