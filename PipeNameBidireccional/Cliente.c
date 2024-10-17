@@ -2,14 +2,14 @@
 Autor: Sara Valentina Garcí­a
 Materia: Sistemas Operativos
 Fecha: 17/10/24
-Tema: Pipe Named o FIFO o TuberÃ­a
+Tema: Pipe Named o FIFO o Tuberí­a
 Tópico: Comunicación Bidireccional 
 
 *********************************CLIENTE******************************
-Pipe named: TuberÃ­a con nombre que permite la comuncaciÃ³n de manera
+Pipe named: Tubería con nombre que permite la comuncación de manera
 bidireccional
 
-El cliente manda un mensaje al servidor por medio de la conección a una tubería
+El cliente manda un mensaje al servidor por medio de la conexión a una tubería
 bidireccional (/tamp/fifo/twowat)
 *********************************************************************/
 #include <stdio.h>
