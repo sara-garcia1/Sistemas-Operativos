@@ -4,12 +4,12 @@ Materia: Sistemas Operativos
 Fecha: 8/08/24
 Tópico: Uso de malloc en codigo de c
  ********************************************************************************************/
-//Librerías
+//Librerías 
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-main(){
+int main(){
   // Se reserva memoria para almacenar 4 números enteros usando diferentes formas de especificar el tamaño
   int *varptr1 = malloc(4*sizeof(int));
   int *varptr2 = malloc(sizeof(int[4]));
@@ -26,13 +26,12 @@ main(){
       //Muestra el valor almacenado en cada posición
       printf("varptr1[%d]\t == %d\n",i, varptr1[i]);
     }
-
-    //se libera la memoria asignada de los 3 apuntadores
-    free(varptr1);
-    free(varptr2);
-    free(varptr3);
-
-    //Fin del programa
-    return 0;
   }
+
+    //se libera la memoria asignada de los 3 apuntadores (si fue asignada)
+    if (varptr1) free(varptr1);    
+    if (varptr2) free(varptr2);    
+    if (varptr3) free(varptr3);
+    //Fin del programa 
+    return 0; 
 }
