@@ -171,3 +171,8 @@ a menudo, presentar el resultado al usuario final.
 
 Servidor: El servidor es el sistema o programa que almacena y gestiona los recursos o servicios y los proporciona a los clientes que lo soliciten.
 Los servidores están siempre disponibles para responder a las solicitudes de los clientes, ejecutando las tareas necesarias y devolviendo los resultados.
+
+COMANDOS: 
+man top: proporciona una vista dinámica en tiempo real de un sistema en ejecución, proporcionando información resumida del sistema, como el orden
+y el tamaño de la información.
+
