@@ -29,7 +29,7 @@ void *contar(void *arg) {
             // Bucle que cuenta hasta 300
             for (int i = 0; i < 300; i++) {
                 // Se simulan 5 milisegundos de espera 
-                usleep(5000); 
+                usleep(500); 
                 //Se imprime que el hilo esta en progreso
                 printf("Hilo %ld en progreso\n",hilo_id);
             }
@@ -45,7 +45,7 @@ void *contar(void *arg) {
         }
 
         pthread_mutex_unlock(&mutex); 
-        usleep(1000);
+        usleep(100);
     }
 
     return NULL;
