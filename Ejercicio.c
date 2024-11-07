@@ -1,3 +1,15 @@
+/*****************************************************************
+MEMBRETE:
+Estudiante en formación: Sara Valentina García
+Materia: Sistemas Operativos
+Fecha: 7 de Noviembre 
+Tópico: Tercer parcial
+
+DESCRIPCIÓN:
+Programa donde se desarrolla una función que contiene un bucle 
+para contar 300 enteros, creando finalmente 5 hilos que imprimirán 
+el orden exacto en el que fueron creados.
+******************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
