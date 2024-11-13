@@ -1,74 +1,98 @@
+/********************************************************************************************
+MEMBRETE
+Integrantes del grupo: Sara García, Alejandro Caicedo, Sergio, Nicolás
+Materia: Sistemas Operativos
+Tópico: Proyecto
+Descripción del archivo: Este archivo contiene toda la lógica del publicador, es decir,
+el que lee las noticias de un archivo y las envía a la tubería siempre y cuando tengan
+el formato requerido, en caso de que no sea el formato correcto la noticia no será publicada
+*********************************************************************************************/
+
+//Librerias necesarias
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> 
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdbool.h>
 #include "publicador.h"
 
-// Función que verifica el formato de cada noticia
+//Función para verificar si la noticia tiene el formato requerido 
 bool validarFormatoNoticia(const char* noticia) {
+  //Verifica que la noticia no esté vacía 
     if (noticia == NULL || strlen(noticia) == 0) return false;
 
-    // El primer carácter es el tipo de la noticia (A, B, C, D, E)
+    //Verifica que el primer caracter sea correcto (A, E, C, P, S)
     char tipo = noticia[0];
-    if (tipo != 'A' && tipo != 'B' && tipo != 'C' && tipo != 'D' && tipo != 'E') {
+    if (tipo != 'A' && tipo != 'E' && tipo != 'C' && tipo != 'P' && tipo != 'S') {
         return false;
     }
 
-    // Verifica que haya un ':' después del tipo
+    //Verifica que después de la letra haya ":"
     char* pos = strchr(noticia, ':');
     if (pos == NULL || pos == noticia || *(pos + 1) == '\0') {
         return false;
     }
 
-    return true;
+    return true; 
 }
 
-// Función que publica una noticia en el pipe
+//Función para enviar noticias al pipe
 void publicarNoticia(int pipe, const char* noticia) {
-    write(pipe, noticia, strlen(noticia) + 1);  // +1 para incluir el terminador de cadena
+  //Write para enviar al pipe y +1 para incluir el terminador de cadena
+    write(pipe, noticia, strlen(noticia) + 1);  
 }
 
-// Función principal del publicador
+//Función principal del publicador
 void ejecutarPublicador(const char* pipePSC, const char* archivoNoticias, int tiempo) {
-    // Abrir el archivo de noticias
+    //Se abre el archivo de noticias, "r" para leer
     FILE* archivo = fopen(archivoNoticias, "r");
     if (archivo == NULL) {
-        fprintf(stderr, "Error al abrir el archivo de noticias.\n");
+      //En caso de error al abrir el archivo se muestra un mensaje
+        fprintf(stderr, "Error al abrir la noticia.\n");
         return;
     }
 
-    // Abrir el pipe nominal
+    //Abre la tuberia 
+    //Modo escritura
     int pipe = open(pipePSC, O_WRONLY);
     if (pipe == -1) {
-        fprintf(stderr, "Error al abrir el pipe.\n");
+      //En caso de no poder abrir el pipe se muestra mensaje de error
+        fprintf(stderr, "Error al abrir tubería.\n");
         return;
     }
 
-    char linea[256];
+    //Variable para leer las líneas de cada archivo
+    char linea[81];
+  
+  //Se lee cada línea de la noticia
     while (fgets(linea, sizeof(linea), archivo) != NULL) {
-        // Eliminar espacios al principio y al final
+        // Eliminar espacios al principio de la línea 
         char* start = linea;
         while (*start == ' ' || *start == '\t') start++;
 
+        //Elimina espacios y al final de la línea
         char* end = linea + strlen(linea) - 1;
         while (end > start && (*end == ' ' || *end == '\n' || *end == '\t')) end--;
-        *(end + 1) = '\0';  // Terminar la cadena
+        *(end + 1) = '\0'; 
 
-        // Validar la noticia
+        //Se valida la noticia antes de publicarla
         if (validarFormatoNoticia(start)) {
-            // Publicar la noticia en el pipe
+            //Si la noticia es válida se publica en la tubería
             publicarNoticia(pipe, start);
         } else {
-            fprintf(stderr, "Formato incorrecto en la noticia: %s\n", start);
+            //Si no es válida se informa 
+            fprintf(stderr, "La noticia tiene el formato incorrecto: %s\n", start);
         }
 
-        // Esperar el tiempo especificado entre noticias
+        //Se espera el tiempo que se especifica en los parámetros
         sleep(tiempo);
     }
 
-    // Cerrar el archivo y el pipe
+    //Se cierra el archivo 
     fclose(archivo);
+    //Se cierra el pipe
     close(pipe);
 }
+
 
